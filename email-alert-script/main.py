@@ -73,7 +73,7 @@ for user in users:
       You can complete the survey at your convenience by clicking the button below:
     </p>
     <div style="text-align: center;">
-      <a href="${survey_link}" target="_blank" style="display: inline-block; margin-top: 20px; padding: 12px 25px; background-color: #28a745; color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold;">
+      <a href="{survey_link}" target="_blank" style="display: inline-block; margin-top: 20px; padding: 12px 25px; background-color: #28a745; color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold;">
         Complete Survey Now
       </a>
     </div>
