@@ -62,7 +62,7 @@ for user in users:
 </head>
 <body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f9f9; margin: 0; padding: 20px; color: #333;">
   <div style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 10px; padding: 30px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
-    <h2 style="color: #2f855a; margin-top: 0;">Hi ${name},</h2>
+    <h2 style="color: #2f855a; margin-top: 0;">Hi {name},</h2>
     <p style="font-size: 16px; line-height: 1.6;">
       We noticed you haven’t completed your <strong>Meal Preference Survey</strong> yet.
     </p>
