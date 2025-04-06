@@ -3,7 +3,8 @@ from pymongo import MongoClient
 import smtplib
 from email.mime.text import MIMEText
 from dotenv import load_dotenv
-
+from email.message import EmailMessage
+from email.utils import formataddr
 # Load .env
 load_dotenv()
 
@@ -19,19 +20,24 @@ db = client['test']               # <- Your DB name
 collection = db['surveys']       # <- Your Collection name
 
 def send_email(receiver_email, subject, text=None, html=None):
-    if html:
-        msg = MIMEText(html, 'html')
-    else:
-        msg = MIMEText(text or "", 'plain')
+    msg = EmailMessage()
     msg['Subject'] = subject
-    msg['From'] = GMAIL_USER
+    msg['From'] = formataddr(("Meal Delight", GMAIL_USER))
     msg['To'] = receiver_email
+    msg['Reply-To'] = GMAIL_USER
+
+    if text and html:
+        msg.set_content(text)
+        msg.add_alternative(html, subtype='html')
+    elif html:
+        msg.add_alternative(html, subtype='html')
+    else:
+        msg.set_content(text or "No message content.")
 
     try:
-        server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-        server.login(GMAIL_USER, GMAIL_PASS)
-        server.sendmail(GMAIL_USER, receiver_email, msg.as_string())
-        server.quit()
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
+            server.login(GMAIL_USER, GMAIL_PASS)
+            server.send_message(msg)
         print(f"✅ Email sent to {receiver_email}")
     except Exception as e:
         print(f"❌ Failed to send email to {receiver_email}: {e}")
@@ -49,76 +55,36 @@ for user in users:
         text = f"Hi {name},\n\nWe noticed you haven’t completed your survey yet. Your responses help us better understand your meal preferences. Click the link below to finish it:\n\n{survey_link}\n\nThank you!"
         html = f"""
         <!DOCTYPE html>
-        <html>
-        <head>
-          <style>
-            @keyframes fadeIn {{
-              from {{ opacity: 0; transform: translateY(20px); }}
-              to {{ opacity: 1; transform: translateY(0); }}
-            }}
-            @keyframes pulse {{
-              0% {{ transform: scale(1); }}
-              50% {{ transform: scale(1.05); }}
-              100% {{ transform: scale(1); }}
-            }}
-            body {{
-              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-              background-color: #f9f9f9;
-              margin: 0;
-              padding: 20px;
-              color: #333;
-            }}
-            .container {{
-              max-width: 600px;
-              margin: auto;
-              background-color: #ffffff;
-              border-radius: 10px;
-              padding: 30px;
-              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-              animation: fadeIn 1s ease-in-out;
-            }}
-            h2 {{
-              color: #2f855a;
-              animation: pulse 1.5s infinite ease-in-out;
-            }}
-            p {{
-              font-size: 16px;
-              line-height: 1.6;
-            }}
-            .btn {{
-              display: inline-block;
-              margin-top: 20px;
-              padding: 12px 25px;
-              background-color: #28a745;
-              color: #fff !important;
-              text-decoration: none;
-              border-radius: 8px;
-              font-weight: bold;
-              transition: background-color 0.3s ease, transform 0.2s ease;
-              animation: fadeIn 1s ease-in-out;
-            }}
-            .btn:hover {{
-              background-color: #218838;
-              transform: scale(1.05);
-            }}
-            .footer {{
-              font-size: 13px;
-              color: #888;
-              margin-top: 30px;
-              text-align: center;
-            }}
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <h2>Hi {name},</h2>
-            <p>We noticed you haven’t completed your <strong>Meal Preference Survey</strong> yet.</p>
-            <p>Your insights help us customize meals just for you — healthier, tastier, and right on your budget.</p>
-            <p>Click the button below to complete the survey and unlock personalized recommendations!</p>
-            <a href="{survey_link}" target="_blank" class="btn">Complete Survey Now</a>
-            <p class="footer">Thank you for your time and support! 🍽️</p>
-          </div>
-        </body>
-        </html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Complete Your Survey</title>
+</head>
+<body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f9f9; margin: 0; padding: 20px; color: #333;">
+  <div style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 10px; padding: 30px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+    <h2 style="color: #2f855a; margin-top: 0;">Hi ${name},</h2>
+    <p style="font-size: 16px; line-height: 1.6;">
+      We noticed you haven’t completed your <strong>Meal Preference Survey</strong> yet.
+    </p>
+    <p style="font-size: 16px; line-height: 1.6;">
+      Your responses help us tailor meals that match your taste and preferences — making your experience healthier, tastier, and more convenient.
+    </p>
+    <p style="font-size: 16px; line-height: 1.6;">
+      You can complete the survey at your convenience by clicking the button below:
+    </p>
+    <div style="text-align: center;">
+      <a href="${survey_link}" target="_blank" style="display: inline-block; margin-top: 20px; padding: 12px 25px; background-color: #28a745; color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold;">
+        Complete Survey Now
+      </a>
+    </div>
+    <p style="font-size: 14px; color: #666; margin-top: 30px; text-align: center;">
+      Thank you for being a valued part of our community.
+    </p>
+    <p style="font-size: 13px; color: #999; text-align: center; margin-top: 10px;">
+      If you have any questions, feel free to reply to this email.
+    </p>
+  </div>
+</body>
+</html>
         """
         send_email(email, subject, text, html)
