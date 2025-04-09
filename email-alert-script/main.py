@@ -54,36 +54,58 @@ for user in users:
         subject = "Complete Your Meal Preference Survey"
         text = f"Hi {name},\n\nWe noticed you haven’t completed your survey yet. Your responses help us better understand your meal preferences. Click the link below to finish it:\n\n{survey_link}\n\nThank you!"
         html = f"""
-        <!DOCTYPE html>
+       
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Complete Your Survey</title>
 </head>
-<body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f9f9; margin: 0; padding: 20px; color: #333;">
-  <div style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 10px; padding: 30px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
-    <h2 style="color: #2f855a; margin-top: 0;">Hi {name},</h2>
-    <p style="font-size: 16px; line-height: 1.6;">
-      We noticed you haven’t completed your <strong>Meal Preference Survey</strong> yet.
-    </p>
-    <p style="font-size: 16px; line-height: 1.6;">
-      Your responses help us tailor meals that match your taste and preferences — making your experience healthier, tastier, and more convenient.
-    </p>
-    <p style="font-size: 16px; line-height: 1.6;">
-      You can complete the survey at your convenience by clicking the button below:
-    </p>
-    <div style="text-align: center;">
-      <a href="{survey_link}" target="_blank" style="display: inline-block; margin-top: 20px; padding: 12px 25px; background-color: #28a745; color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold;">
-        Complete Survey Now
-      </a>
-    </div>
-    <p style="font-size: 14px; color: #666; margin-top: 30px; text-align: center;">
-      Thank you for being a valued part of our community.
-    </p>
-    <p style="font-size: 13px; color: #999; text-align: center; margin-top: 10px;">
-      If you have any questions, feel free to reply to this email.
-    </p>
-  </div>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; color: #333333;">
+  <table cellpadding="0" cellspacing="0" width="100%" style="background-color: #f5f5f5; padding: 20px;">
+    <tr>
+      <td align="center">
+        <table cellpadding="0" cellspacing="0" width="600" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+          <tr>
+            <td style="padding: 30px 30px 20px 30px;">
+              <h2 style="color: #28a745; margin-top: 0;">Hi {name},</h2>
+              <p style="font-size: 16px; line-height: 1.5;">
+                We noticed you started but haven't yet completed your meal preference survey.
+              </p>
+              <p style="font-size: 16px; line-height: 1.5;">
+                Your input helps us create meal recommendations that match your unique tastes and dietary needs.
+              </p>
+              <p style="font-size: 16px; line-height: 1.5;">
+                You can finish the survey at your convenience using the link below:
+              </p>
+              <p style="text-align: center; margin: 25px 0;">
+                <a href={survey_link} style="background-color: #28a745; color: #ffffff; text-decoration: none; padding: 12px 25px; border-radius: 5px; font-weight: bold; display: inline-block;">Complete Your Survey</a>
+              </p>
+              
+              <p style="font-size: 16px; line-height: 1.5;">
+                Thank you for helping us improve your meal experience.
+              </p>
+              <p style="font-size: 16px; line-height: 1.5;">
+                Best regards,<br>
+                The Meal Delight Team
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 20px 30px; background-color: #f9f9f9; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; color: #777; font-size: 12px; text-align: center;">
+              <p>
+                Meal Delight Inc., 123 Nutrition Street, Foodville, CA 94043
+              </p>
+              <p>
+                <a href="mailto:{GMAIL_USER}?subject=unsubscribe" style="color: #777;">Click here to unsubscribe</a>
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
 </body>
 </html>
         """
