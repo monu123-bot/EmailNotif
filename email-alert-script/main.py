@@ -83,7 +83,7 @@ for user in users:
               </p>
               
               <p style="font-size: 14px; line-height: 1.5; margin: 20px 0 10px; color: #666666;">
-                The survey takes approximately 5 minutes to complete and your feedback will be used to improve our service.
+                The survey takes approximately 2 minutes to complete and your feedback will be used to improve our service.
               </p>
               
               <p style="font-size: 16px; line-height: 1.5; margin: 15px 0;">
