@@ -53,7 +53,7 @@ for user in users:
         survey_link = f"{CLIENT_URL}/survey/continue/{user['_id']}"
         subject = "Complete Your Meal Preference Survey"
         text = f"Hi {name},\n\nWe noticed you haven’t completed your survey yet. Your responses help us better understand your meal preferences. Click the link below to finish it:\n\n{survey_link}\n\nThank you!"
-       html = f"""
+        html = f"""
 <!DOCTYPE html>
 <html>
 <head>
@@ -95,7 +95,7 @@ for user in users:
           <tr>
             <td style="padding: 20px 30px; background-color: #f7f7f7; border-top: 1px solid #eeeeee; color: #777777; font-size: 12px; text-align: center;">
               <p style="margin: 5px 0;">
-                Meal Delight Inc., Sec 28 Gurugram, Haryana India.
+                Meal Delight , Sec 28 Gurugram, Haryana India.
               </p>
               <p style="margin: 5px 0;">
                 <a href="mailto:{GMAIL_USER}?subject=unsubscribe" style="color: #777777;">Unsubscribe</a> | 
